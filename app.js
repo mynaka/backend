@@ -11,7 +11,7 @@ exports.build = async (opts = { logger: true, trustProxy: true }) => {
     //initialize server using fastify
     const app = fastify(opts);
 
-    routes(app);
+    routes(app); 
 
     return app;
 };
