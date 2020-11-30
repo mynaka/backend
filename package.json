@@ -8,5 +8,8 @@
     "start": "node index.js"
   },
   "author": "Amos Chaceter Ervin Villanueva",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "fastify": "^3.8.0"
+  }
 }
