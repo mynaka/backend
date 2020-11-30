@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "npx nodemon"
   },
   "author": "Amos Chaceter Ervin Villanueva",
   "license": "MIT",
   "dependencies": {
     "fastify": "^3.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }
