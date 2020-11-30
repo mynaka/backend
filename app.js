@@ -6,7 +6,7 @@ const fastify = require('fastify');
  * @param {{ logger: boolean, trustProxy: boolean }} opts 
  * @returns {*}
  */
-exports.build = async (opts = { logger: true, trustProxy: true }) => {  
+exports.build = async (opts = { logger: true, trustProxy: true }) => {
     //initialize server using fastify
     const app = fastify(opts);
 
@@ -21,7 +21,7 @@ exports.build = async (opts = { logger: true, trustProxy: true }) => {
             console.log("Not Hello World");
 
             //response in JSON format
-            return { success: true }   
+            return { success: true }
         }
     });
     return app;
