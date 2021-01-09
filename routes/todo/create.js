@@ -20,7 +20,18 @@ exports.create = app => {
             const { body } = req;
             //get text and done with def false from body,
             //regardless of value
-            const { text, done = false } = body;
+            const { text, done = false } = body || {};
+
+            if(!text) {
+                return response
+                    .code(400)
+                    .send({
+                        success: false,
+                        code: 'todo/malformed',
+                        message: 'Payload does not have text property'
+                    });
+            }
+
             const filename = join(__dirname, '../../database.json');
             const encoding = 'utf8';
 
