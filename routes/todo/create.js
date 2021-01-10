@@ -43,7 +43,7 @@ exports.create = app => {
                 text,
                 done,
                 dateCreated: new Date().getTime(), //UNIX Epoch Time in ms
-                dateUpdates: new Date().getTime()
+                dateUpdated: new Date().getTime()
             };
 
             database.todos.push(data);
