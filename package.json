@@ -4,7 +4,7 @@
   "description": "Backend",
   "main": "index.js",
   "scripts": {
-    "test": "npx tap --reporter=spec",
+    "test": "npx tap --reporter",
     "start": "npx nodemon"
   },
   "author": "Amos Chaceter Ervin Villanueva",
