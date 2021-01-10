@@ -10,10 +10,10 @@ exports.getMany = app => {
     /**
      * This gets the todos from the database
      *
-     * @param {import('fastify').FastifyRequest} request
+     * @param {import('fastify').FastifyRequest} req
      */
-    app.get('/todo', (request) => {
-      const { query } = request;
+    app.get('/todo', (req) => {
+      const { query } = req;
       const { limit = 3, startDate } = query;
       const encoding = 'utf8';
       const filename = join(__dirname, '../../database.json');
