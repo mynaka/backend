@@ -23,7 +23,7 @@ exports.create = app => {
             const { text, done = false } = body || {};
 
             if(!text) {
-                return response
+                return res
                     .code(400)
                     .send({
                         success: false,
