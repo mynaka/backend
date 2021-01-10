@@ -24,7 +24,7 @@ exports.get = app => {
     const index = todos.findIndex(todo => todo.id === id);
 
     if (index < 0) {
-        return response
+        return res
           .code(404)
           .send({
             success: false,
