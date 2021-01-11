@@ -1,5 +1,4 @@
-const { getTodos } = require('../../lib/get-todos');
-const { join } = require('path');
+const { Todo } = require('../../db');
 
 /**
  * Gets one todo
@@ -13,17 +12,13 @@ exports.get = app => {
    * @param {import('fastify').FastifyRequest} req
    * @param {import('fastify').FastifyReply<Response>} res
    */
-  app.get('/todo/:id', (req,res) => {
+  app.get('/todo/:id', async(req, res) => {
     const { params } = req;
     const { id } = params;
 
-    const encoding = 'utf8';
-    const filename = join(__dirname, '../../database.json');
-    const todos = getTodos(filename, encoding);
+    const data = await Todo.findOne({ id }).exec();
 
-    const index = todos.findIndex(todo => todo.id === id);
-
-    if (index < 0) {
+    if (!data) {
         return res
           .code(404)
           .send({
@@ -33,9 +28,6 @@ exports.get = app => {
         });
     }
   
-
-    const data = todos[index];
-
     return {
       success: true,
       data
