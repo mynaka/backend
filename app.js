@@ -1,6 +1,6 @@
 const fastify = require('fastify');
 const { routes } = require('./routes');
-const { connect } = require('/db');
+const { connect } = require('./db');
 
 /**
  * Server Init
