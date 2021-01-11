@@ -3,7 +3,7 @@ const { Todo } = require('../../db');
 /**
  * Gets many todos from the database
  * 
- * @param {} app 
+ * @param {*} app 
  */
 exports.getMany = app => {
     /**
@@ -40,4 +40,4 @@ exports.getMany = app => {
         data
       };
     });
-}
+};

@@ -1,4 +1,4 @@
-const data = await Todo.findOne({ id }).exec();
+const { Todo } = require('../../db');
 
 /**
  * Updates one todo
@@ -28,7 +28,6 @@ exports.update = app => {
         });
     }
 
-    // expect that we should be getting at least a text or a done property
     const oldData = await Todo.findOne({ id }).exec();
 
     if (!oldData){
@@ -46,11 +45,9 @@ exports.update = app => {
     if (text) {
       update.text = text;
     }
-    
     if (done !== undefined && done !== null) {
       update.done = done;
     }
-
 
     update.dateUpdated = new Date().getTime();
 
@@ -60,7 +57,6 @@ exports.update = app => {
       { new: true }
     )
       .exec();
-
 
     return {
       success: true,
