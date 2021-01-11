@@ -1,5 +1,6 @@
 const fastify = require('fastify');
 const { routes } = require('./routes');
+const { connect } = require('/db');
 
 /**
  * Server Init
@@ -10,6 +11,8 @@ const { routes } = require('./routes');
 exports.build = async (opts = { logger: false, trustProxy: false }) => {
     //initialize server using fastify
     const app = fastify(opts);
+
+    await connect();
 
     routes(app); 
 
