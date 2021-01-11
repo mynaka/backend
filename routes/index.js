@@ -1,4 +1,7 @@
-const { todo } = require('./todo')
+const { todo } = require('./todo');
+const { definitions } = require('../definitions');
+const { SuccessResponse } = definitions;
+
 /**
  * initialize all the routes
  * @param {*} app 
@@ -6,7 +9,14 @@ const { todo } = require('./todo')
 exports.routes = (app) => {
     //access root address: http://localhost
     app.get('/', {
-        //object
+        schema: {
+            description: 'Server root route',
+            tags: ['Root'],
+            summary: 'Server root route',
+            response: {
+              200: SuccessResponse
+            }
+        },
 
         /**
          * @param {*} req - this is the request parameter sent by the client

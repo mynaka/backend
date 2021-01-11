@@ -1,4 +1,7 @@
 const { Todo } = require('../../db');
+const { definitions } = require('../../definitions');
+const { GetOneTodoResponse, PostTodoRequest } = definitions;
+
 /**
  * this is the route for creating todos  
  * 
@@ -6,6 +9,17 @@ const { Todo } = require('../../db');
  */
 exports.create = app => {
     app.post('/todo', {
+        schema: {
+            description: 'Create one todo',
+            tags: ['Todo'],
+            summary: 'Create one todo',
+            body: PostTodoRequest,
+            response: {
+              200: GetOneTodoResponse
+            }
+        },
+      
+
         /**
          * handles the request for a given route
          * 
@@ -16,9 +30,9 @@ exports.create = app => {
             const { body } = req;
             //get text and done with def false from body,
             //regardless of value
-            const { text, done = false } = body || {};
+            const { text, done = false } = body;
 
-            if(!text) {
+            /*if(!text) {
                 return res
                     .code(400)
                     .send({
@@ -26,7 +40,7 @@ exports.create = app => {
                         code: 'todo/malformed',
                         message: 'Payload does not have text property'
                     });
-            }
+            }*/
 
             const data = new Todo({
                 text,
