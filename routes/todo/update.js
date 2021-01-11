@@ -46,7 +46,7 @@ exports.update = app => {
       const oldData = await Todo.findOne({ id }).exec();
 
       if (!oldData) {
-        return response
+        return res
           .code(404)
           .send({
             success: false,
