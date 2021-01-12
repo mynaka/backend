@@ -1,21 +1,22 @@
-const { Todo } = require('../../db');
+const bcrypt = require('bcrypt');
+const { User } = require('../../db');
 const { definitions } = require('../../definitions');
-const { GetOneTodoResponse, PostTodoRequest } = definitions;
+const { GetOneUserResponse, PostUserRequest } = definitions;
 
 /**
- * this is the route for creating todos  
+ * this is the route for creating a user  
  * 
  * @param {*} app 
  */
 exports.create = app => {
     app.post('/todo', {
         schema: {
-            description: 'Create one todo',
-            tags: ['Todo'],
-            summary: 'Create one todo',
-            body: PostTodoRequest,
+            description: 'Create one user',
+            tags: ['Create'],
+            summary: 'Create one user',
+            body: PostUserRequest,
             response: {
-              200: GetOneTodoResponse
+              200: GetOneUserResponse
             }
         },
 
@@ -29,15 +30,17 @@ exports.create = app => {
             const { body } = req;
             //get text and done with def false from body,
             //regardless of value
-            const { text, done = false } = body;
+            const { username, password } = body;
 
-            const data = new Todo({
-                text,
-                done,
+            const hash = await bcrypt.hash(password, saltRounds);
+
+            const data = new User({
+                username,
+                password: hash,
             });
 
             await data.save();
-            
+
             return{
                 success: true,
                 data
