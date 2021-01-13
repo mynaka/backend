@@ -34,12 +34,7 @@ exports.get = app => {
 
       if (!data) {
         return res
-          .code(404)
-          .send({
-            success: false,
-            code: 'todo/not-found',
-            message: 'Todo does not exist'
-          });
+          .notFound('todo/not-found')
       }
 
       return {
