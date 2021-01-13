@@ -1,3 +1,4 @@
+ 
 /**
  * This exports the model for user
  * @param {import('mongoose').Mongoose} mongoose
@@ -5,7 +6,7 @@
 module.exports = (mongoose) => {
   const { Schema } = mongoose;
 
-  const todoSchema = new Schema({
+  const userSchema = new Schema({
     username: {
       type: String,
       required: true,
@@ -29,5 +30,5 @@ module.exports = (mongoose) => {
     }
   });
 
-  return mongoose.model('Todo', todoSchema);
+  return mongoose.model('User', userSchema);
 };
