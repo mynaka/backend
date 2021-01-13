@@ -11,7 +11,6 @@ const { errorHandler } = require('./error-handler');
 const { definitions } = require('./definitions');
 const { routes } = require('./routes');
 const { connect, User, DiscardedToken } = require('./db');
-const { connect, User } = require('./db');
 const { name: title, description, version } = require('./package.json');
 
 const audience = 'this-audience';

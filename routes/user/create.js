@@ -12,13 +12,13 @@ const saltRounds = 10;
 exports.create = app => {
   app.post('/user', {
     schema: {
-        description: 'Create one user',
-        tags: ['User'],
-        summary: 'Create one user',
-        body: PostUserRequest,
-        response: {
-            200: GetOneUserResponse
-        }
+      description: 'Create one user',
+      tags: ['User'],
+      summary: 'Create one user',
+      body: PostUserRequest,
+      response: {
+        200: GetOneUserResponse
+      }
     },
     /**
      * handles the request for a given route
@@ -27,24 +27,24 @@ exports.create = app => {
      * @param {import('fastify').FastifyReply<Response>} res
      */
     handler: async (req, res) => {
-        const { body } = req;
-        //get text and done with def false from body,
-        //regardless of value
-        const { username, password } = body;
+      const { body } = req;
+      //get text and done with def false from body,
+      //regardless of value
+      const { username, password } = body;
 
-        const hash = await bcrypt.hash(password, saltRounds);
+      const hash = await bcrypt.hash(password, saltRounds);
 
-        const data = new User({
-            username,
-            password: hash,
-        });
+      const data = new User({
+        username,
+        password: hash,
+      });
 
-        await data.save();
+      await data.save();
 
-        return{
-            success: true,
-            data
-        }
+      return{
+        success: true,
+        data
+      }
     }
   })
 };

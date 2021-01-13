@@ -34,7 +34,7 @@ exports.get = app => {
      * @param {import('fastify').FastifyReply<Response>} res
      */
     handler: async(req, res) => {
-      const { params, user } = request;
+      const { params, user } = req;
       const { username } = user;
       const { id } = params;
 
