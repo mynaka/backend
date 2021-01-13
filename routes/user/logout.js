@@ -31,6 +31,7 @@ exports.logout = app => {
      * @param {import('fastify').FastifyRequest} req
      * @param {import('fastify').FastifyReply<Response>} res
      */
+    
     handler: async (req, res) => {
       const { token, user } = req;
       const { username } = user;

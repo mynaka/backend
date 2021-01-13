@@ -27,21 +27,19 @@ exports.login = app => {
      */
     handler: async (req, res) => {
       const { body } = req;
-      //get text and done with def false from body,
-      //regardless of value
       const { username, password } = body;
 
       const user = await User.findOne({ username }).exec();
 
       if(!(await bcrypt.compare(password, user.password))){
-        return response
+        return res
           .unauthorized('auth/wrong-password');
       }
       const data = app.jwt.sign({
         username
       })
 
-      request.session.token = data;
+      req.session.token = data;
 
       return{
         success: true,
