@@ -1,10 +1,17 @@
 const UniqueIDData = {
   type: 'string',
   description: 'A unique identifier',
-  value: '1325cff1-8f82-46f6-843a-ceaf6d571248',
-  example: '1325cff1-8f82-46f6-843a-ceaf6d571248'
+  value: '62d69f22-38c8-429c-a180-14af27339ba5',
+  example: '62d69f22-38c8-429c-a180-14af27339ba5'
 };
-  
+
+const JWTData = {
+  type: 'string',
+  description: 'A JSON Web Token',
+  value: '62d69f22-38c8-429c-a180-14af27339ba5',
+  example: '62d69f22-38c8-429c-a180-14af27339ba5'
+};
+
 const UsernameData = {
   type: 'string',
   description: 'A unique username',
@@ -36,8 +43,8 @@ const DoneData = {
 const DateData = {
   type: 'number',
   description: 'A date value that is in Unix Epoch',
-  value: 1598678462382,
-  example: 1598678462382
+  value: 1606737890100,
+  example: 1606737890100
 };
   
 const SuccessData = {
@@ -171,7 +178,17 @@ const GetOneTodoResponse = {
     data: TodoFullData
   }
 }
-  
+
+const LoginResponse = {
+  type: 'object',
+  description: 'Returns a JWT data',
+  required: ['success', 'data'],
+  properties: {
+    success: SuccessData,
+    data: JWTData
+  }
+}
+
 exports.definitions = {
   SuccessResponse,
   GetManyTodoResponse,
@@ -181,6 +198,7 @@ exports.definitions = {
   PostTodoRequest,
   PutTodoRequest,
   PostUserRequest,
-  GetOneUserResponse
+  GetOneUserResponse,
+  LoginResponse
 }
   
