@@ -8,7 +8,7 @@ describe('For the route for creating a user POST: (/user)', () => {
   const usernames = [];
 
   before(async () => {
-    // initialize the backend applicaiton
+    //initialize the backend applicaiton
     app = await build();
 
     for (let i = 0; i < 1; i++) {
@@ -30,7 +30,7 @@ describe('For the route for creating a user POST: (/user)', () => {
   });
 
   after(async () => {
-    // clean up the database
+    //clean up the database
     for (const username of usernames) {
       await User.findOneAndDelete({ username });
     }
@@ -38,7 +38,7 @@ describe('For the route for creating a user POST: (/user)', () => {
     await mongoose.connection.close();
   });
 
-  // happy path
+  //happy path
   it('it should return { success: true, data: (new user object) } and has a status code of 200 when called using POST', async () => {
     const response = await app.inject({
       method: 'POST',
@@ -52,14 +52,14 @@ describe('For the route for creating a user POST: (/user)', () => {
     const payload = response.json();
     const { statusCode } = response;
     const { success, data } = payload;
-    // const { username } = data;
+    //const { username } = data;
 
     success.should.equal(true);
     statusCode.should.equal(200);
-    // username.should.equal('user01');
+    //username.should.equal('user01');
   });
 
-  // non-happy path
+  //non-happy path
   it('it should return { success: false, message: error message } and has a status code of 401 when called using POST and we use a different password', async () => {
     const response = await app.inject({
       method: 'POST',

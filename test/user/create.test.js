@@ -15,7 +15,7 @@ describe('For the route for creating a user POST: (/user)', () => {
   after(async () => {
     //clean up the database
     for (const username of usernames) {
-      await User.findOneAndDelete({ id });
+      await User.findOneAndDelete({ username });
     }
 
     await mongoose.connection.close();
@@ -27,8 +27,8 @@ describe('For the route for creating a user POST: (/user)', () => {
       method: 'POST',
       url: '/user',
       payload: {
-        username: 'user00',
-        password: 'false'
+        username: 'user01',
+        password: 'password1234567890'
       }
     });
 
@@ -39,11 +39,10 @@ describe('For the route for creating a user POST: (/user)', () => {
 
     success.should.equal(true);
     statusCode.should.equal(200);
-    username.should.equal('user00');
+    username.should.equal('user01');
 
     const {
-      username: usernameDatabase ,
-
+      username: usernameDatabase
     } = await User
       .findOne({ username })
       .exec();
@@ -53,14 +52,14 @@ describe('For the route for creating a user POST: (/user)', () => {
     // add the id in the ids array for cleaning
     usernames.push(username);
   });
- 
-  //non-happy path test
+
+  //non-happy path
   it('it should return { success: false, message: error message } and has a status code of 400 when called using POST and there is no username', async () => {
     const response = await app.inject({
       method: 'POST',
       url: '/user',
       payload: {
-        password: '4510471'
+        password: 'password1234567890'
       }
     });
 
@@ -73,13 +72,13 @@ describe('For the route for creating a user POST: (/user)', () => {
     should.exist(message);
   })
 
-  //non-happy path test
+  //non-happy path
   it('it should return { success: false, message: error message } and has a status code of 400 when called using POST and there is no password', async () => {
     const response = await app.inject({
       method: 'POST',
       url: '/user',
       payload: {
-        username: 'user01'
+        username: 'user02'
       }
     });
 
@@ -91,7 +90,6 @@ describe('For the route for creating a user POST: (/user)', () => {
     //success.should.equal(false);
     should.exist(message);
   })
-
 
   //moar non-happy path test
   it('it should return { success: false, message: error message } and has a status code of 400 when called using POST and there is no payload', async () => {
