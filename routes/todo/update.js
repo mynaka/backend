@@ -18,8 +18,16 @@ exports.update = app => {
       params: GetOneTodoParams,
       response: {
         200: GetOneTodoResponse
-      }
+      },
+      security: [
+        {
+          bearer: []
+        }
+      ]
     },
+    preHandler: app.auth([
+      app.verifyJWT
+    ]),
     /**
      * This updates one todo from the database give a unique ID and a payload
      *
@@ -27,7 +35,8 @@ exports.update = app => {
      * @param {import('fastify').FastifyReply<Response>} res
      */
     handler: async (req, res) => {
-      const { params, body } = req;
+      const { params, body, user } = req;
+      const { username } = user;
       const { id } = params;
       // get text and done from body.
       const { text, done } = body;
@@ -38,8 +47,8 @@ exports.update = app => {
           .badRequest('request/malformed');
       }
 
-      const oldData = await Todo.findOne({ id }).exec();
-
+      const oldData = await Todo.findOne({ id, username }).exec();
+      
       if (!oldData) {
         return res
           .notFound('todo/not-found');

@@ -16,8 +16,16 @@ exports.create = app => {
             body: PostTodoRequest,
             response: {
               200: GetOneTodoResponse
-            }
+            },
+            security: [
+              {
+                bearer: []
+              }
+            ]
         },
+        preHandler: app.auth([
+            app.verifyJWT
+        ]),
 
         /**
          * handles the request for a given route
@@ -26,14 +34,16 @@ exports.create = app => {
          * @param {import('fastify').FastifyReply<Response>} res
          */
         handler: async (req, res) => {
-            const { body } = req;
+            const { body, user } = req;
             //get text and done with def false from body,
             //regardless of value
             const { text, done = false } = body;
+            const { username } = user;
 
             const data = new Todo({
                 text,
                 done,
+                username
             });
 
             await data.save();

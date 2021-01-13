@@ -1,5 +1,6 @@
 const { create } = require('./create');
 const { login } = require('./login');
+const { logout } = require('./logout');
 const { auth } = require('./auth');
 
 /**
@@ -10,4 +11,5 @@ exports.user = app => {
     create(app);
     login(app);
     auth(app);
+    logout(app);
 }

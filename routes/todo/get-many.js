@@ -16,18 +16,29 @@ exports.getMany = app => {
       query: GetManyTodoQuery,
       response: {
         200: GetManyTodoResponse
-      }
+      },
+      security: [
+        {
+          bearer: []
+        }
+      ]
     },
+    preHandler: app.auth([
+      app.verifyJWT
+    ]),
     /**
      * This gets the todos from the database
      *
      * @param {import('fastify').FastifyRequest} req
      */
     handler: async (req) => {
-      const { query } = req;
+      const { query, user } = req;
+      const { username } = user;
       const { limit = 3, startDate, endDate } = query;
 
-      const options = {};
+      const options = {
+        username
+      };
 
       if (startDate) {
         options.dateUpdated = {};

@@ -17,9 +17,16 @@ exports.get = app => {
       params: GetOneTodoParams,
       response: {
         200: GetOneTodoResponse
-      }
+      },
+      security: [
+        {
+          bearer: []
+        }
+      ]
     },
-
+    preHandler: app.auth([
+      app.verifyJWT
+    ]),
     /**
      * This gets one todos from the database give a unique ID
      *
@@ -27,10 +34,11 @@ exports.get = app => {
      * @param {import('fastify').FastifyReply<Response>} res
      */
     handler: async(req, res) => {
-      const { params } = req;
+      const { params, user } = request;
+      const { username } = user;
       const { id } = params;
 
-      const data = await Todo.findOne({ id }).exec();
+      const data = await Todo.findOne({ id, username }).exec();
 
       if (!data) {
         return res
