@@ -43,6 +43,7 @@ exports.login = app => {
 
             return{
                 success: true,
+                data
             };
         }
     });
