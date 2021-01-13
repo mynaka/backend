@@ -12,7 +12,7 @@ exports.login = app => {
     app.post('/login', {
         schema: {
             description: 'Logs in one user',
-            tags: ['Login'],
+            tags: ['User'],
             summary: 'Logs in one user',
             body: PostUserRequest,
             response: {
