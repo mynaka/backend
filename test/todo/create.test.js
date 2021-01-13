@@ -1,22 +1,44 @@
-const { mongoose, Todo } = require('../../db');
+const { mongoose, Todo, User } = require('../../db');
 const { build } = require('../../app');
 const should = require('should');
 require('tap').mochaGlobals();
 
 describe('For the route for creating a todo POST: (/todo)', () => {
   let app;
+  let authorization = '';
   const ids = [];
 
   before(async () => {
-    //initialize backend app
+    // initialize the backend applicaiton
     app = await build();
+    const payload = {
+      username: 'testuser',
+      password: 'password1234567890'
+    }
+
+    await app.inject({
+      method: 'POST',
+      url: '/user',
+      payload
+    });
+
+    const response = await app.inject({
+      method: 'POST',
+      url: '/login',
+      payload
+    });
+    const { data: token } = response.json();
+
+    authorization = `Bearer ${token}`;
   });
 
   after(async () => {
-    //clean up the database
+    // clean up the database
     for (const id of ids) {
       await Todo.findOneAndDelete({ id });
     }
+
+    await User.findOneAndDelete({ username: 'testuser' });
 
     await mongoose.connection.close();
   });
@@ -26,6 +48,9 @@ describe('For the route for creating a todo POST: (/todo)', () => {
     const response = await app.inject({
       method: 'POST',
       url: '/todo',
+      headers: {
+        authorization
+      },
       payload: {
         text: 'This is a todo',
         done: false
@@ -61,6 +86,9 @@ describe('For the route for creating a todo POST: (/todo)', () => {
     const response = await app.inject({
       method: 'POST',
       url: '/todo',
+      headers: {
+        authorization
+      },
       payload: {
         text: 'This is a todo 2'
       }
@@ -90,11 +118,14 @@ describe('For the route for creating a todo POST: (/todo)', () => {
     ids.push(id);
   });
 
-  //non-happy path test
+  // non-happy path
   it('it should return { success: false, message: error message } and has a status code of 400 when called using POST and there is no text', async () => {
     const response = await app.inject({
       method: 'POST',
       url: '/todo',
+      headers: {
+        authorization
+      },
       payload: {
         done: true
       }
@@ -105,15 +136,18 @@ describe('For the route for creating a todo POST: (/todo)', () => {
     const { success, message } = payload;
 
     statusCode.should.equal(400);
-    //success.should.equal(false);
+    success.should.equal(false);
     should.exist(message);
   })
 
-  //moar non-happy path test
+  // another non-happy
   it('it should return { success: false, message: error message } and has a status code of 400 when called using POST and there is no payload', async () => {
     const response = await app.inject({
       method: 'POST',
-      url: '/todo'
+      url: '/todo',
+      headers: {
+        authorization
+      }
     });
 
     const payload = response.json();
@@ -121,7 +155,7 @@ describe('For the route for creating a todo POST: (/todo)', () => {
     const { success, message } = payload;
 
     statusCode.should.equal(400);
-    //success.should.equal(false);
+    success.should.equal(false);
     should.exist(message);
   })
 });
